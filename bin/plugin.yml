@@ -1,0 +1,16 @@
+name: Zones
+version: 0.2
+author: Sabersamus
+main: info.bytecraft.zones.Zones
+database: true
+commands:
+    zone:
+        description: manage the zones
+    lot:
+        description: manage lots
+        usage: |
+            /<command> [create] [name] [owner]
+    town:
+        description: manage the current zone you are in
+        usage: |
+            /<command>
