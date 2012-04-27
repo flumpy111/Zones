@@ -37,7 +37,7 @@ public class ZoneEnter implements Listener{
 					if(zone.contains(to) && !zone.contains(from)){
 						if(!player.hasPermission("bytecraft.admin")){
 					player.teleport(event.getFrom());
-					player.sendMessage(ChatColor.RED + "You are not allowed in " + zone.getName());
+					player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed in " + zone.getName());
 					event.setCancelled(true);
 						}
 					}
@@ -48,7 +48,7 @@ public class ZoneEnter implements Listener{
 						}else{
 							if(players.getRank() != Rank.ALLOWED || players.getRank() != Rank.MAKER || players.getRank() != Rank.OWNER){
 								if(!player.hasPermission("bytecraft.admin")){
-								player.sendMessage(ChatColor.RED + "You are not allowed in " + zone.getName());
+								player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed in " + zone.getName());
 								event.setCancelled(true);
 								}
 							}

@@ -27,7 +27,7 @@ public class ZoneCommand implements CommandExecutor{
 			if(cs instanceof Player){
 				Player player = (Player)cs;
 				if(args[0].equalsIgnoreCase("create")){
-					if(player.hasPermission("bytecraft.zone.create")){
+					if(player.hasPermission("bytecraft.zones.create")){
 					if(args.length == 2){
 						if(!Selector.border1.containsKey(player) || !Selector.border2.containsKey(player)){
 							player.sendMessage(ChatColor.RED + "You must select both points first");
@@ -59,7 +59,7 @@ public class ZoneCommand implements CommandExecutor{
 					}
 				}else if(args[0].equalsIgnoreCase("delete")){
 					if(args.length == 2){
-					if(player.hasPermission("bytecraft.zone.delete")){
+					if(player.hasPermission("bytecraft.zones.delete")){
 					String name = args[1];
 					Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique();
 					if(zone == null){
@@ -77,10 +77,40 @@ public class ZoneCommand implements CommandExecutor{
 					}
 				}
 				}else if(args[0].equalsIgnoreCase("adduser")){
+					Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique();
+					if(zone == null){
+						try{
+							throw new ZoneNotFoundException(ChatColor.RED + "No zone found by the name of " + args[1]);
+						}catch(ZoneNotFoundException ex){
+							player.sendMessage(ex.getMessage());
+						}
+						return true;
+					}
+					
+					ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
+					if(players == null){
+						return true;
+					}else{
+						if(players.getRank() != Rank.OWNER || !player.hasPermission("bytecraft.zones.admin")){
+							return true;
+						}else{
+							
+						}
+					}
 					//Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique();
 					//Player target = Bukkit.getPlayer(args[2]);
 					return true;
 				}else if(args[0].equalsIgnoreCase("deluser")){
+					ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", args[1]).ieq("playerName", player.getName()).findUnique();
+					if(players == null){
+						return true;
+					}else{
+						if(players.getRank() != Rank.OWNER || !player.hasPermission("bytecraft.zones.admin")){
+							return true;
+						}else{
+							
+						}
+					}
 					//Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique();
 					//Player target = Bukkit.getPlayer(args[2]);
 					return true;

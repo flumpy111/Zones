@@ -31,7 +31,7 @@ public class LotSelect implements Listener{
 	public void onSelect(PlayerInteractEvent event){
 		Player player = event.getPlayer();
 		if(event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-			if(player.getItemInHand().getType() == Material.STICK){
+			if(player.getItemInHand().getType() == Material.WOOD_SWORD){
 			Location loc = event.getClickedBlock().getLocation();
 			ZoneVector vector = new ZoneVector(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 			List<Zone> zones = plugin.getDatabase().find(Zone.class).where().ieq("worldName", loc.getWorld().getName()).findList();

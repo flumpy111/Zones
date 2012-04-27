@@ -231,4 +231,14 @@ public class Zone {
 	public void setFreeBreak(boolean canBreak){
 		this.freeBreak = canBreak;
 	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(obj == null)return false;
+		return (Zone)obj == this;
+	}
+	
+	public static boolean exists(String name){
+		return Bukkit.getPluginManager().getPlugin("Zones").getDatabase().find(Zone.class).where().ieq("name", name).findUnique() == null;
+	}
 }

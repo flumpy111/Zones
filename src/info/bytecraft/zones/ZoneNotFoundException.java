@@ -10,4 +10,8 @@ public class ZoneNotFoundException extends Exception{
 	public ZoneNotFoundException(String message, Exception ex){
 		super(message, ex);
 	}
+
+	public ZoneNotFoundException() {
+		
+	}
 }

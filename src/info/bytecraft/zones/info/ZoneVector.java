@@ -53,4 +53,10 @@ public class ZoneVector {
 	  {
 	    this.z = z;
 	  }
+	  
+	  @Override
+	  public boolean equals(Object obj){
+		  if(obj == null)return false;
+		  return (ZoneVector)obj == this;
+	  }
 }
