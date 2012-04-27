@@ -38,7 +38,7 @@ public class TownCommand implements CommandExecutor{
 						}else{
 							if(args.length >=3){
 								ZonePlayers info = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
-								if(info == null || info.getRank() != Rank.OWNER){
+								if(info == null || info.getRank() != Rank.OWNER || !player.hasPermission("bytecraft.zones.admin")){
 									return true;
 								}else{
 								if(args[0].equalsIgnoreCase("adduser")){
@@ -63,7 +63,7 @@ public class TownCommand implements CommandExecutor{
 										return true;
 									}
 								}else if(args[0].equalsIgnoreCase("set")){
-									if(args[1].equalsIgnoreCase("pvp")){
+									if(args[1].equalsIgnoreCase("pvp") && player.hasPermission("bytecraft.zones.admin")){
 										boolean value;
 										try{
 											value = Boolean.parseBoolean(args[2]);
