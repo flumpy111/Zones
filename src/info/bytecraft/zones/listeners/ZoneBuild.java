@@ -37,7 +37,7 @@ public class ZoneBuild implements Listener{
 					if(players.getRank() != Rank.MAKER){
 						if(!player.hasPermission("bytecraft.admin") || !player.isOp()){
 					event.setCancelled(true);
-					player.sendMessage(ChatColor.RED + "You are not allowed to break blocks in " + zone.getName());
+					player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed to break blocks in " + zone.getName());
 					player.setFireTicks(100);
 							}
 						}
@@ -47,7 +47,7 @@ public class ZoneBuild implements Listener{
 					if(!zone.isFreeBreak()){
 						if(!player.hasPermission("bytecraft.admin")){
 						event.setCancelled(true);
-						player.sendMessage(ChatColor.RED + "You are not allowed to break blocks in " + zone.getName());
+						player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed to break blocks in " + zone.getName());
 						player.setFireTicks(100);
 						}
 					}
@@ -71,7 +71,7 @@ public class ZoneBuild implements Listener{
 						if(players.getRank() != Rank.MAKER){
 							if(!player.hasPermission("bytecraft.admin") || !player.isOp()){
 						event.setCancelled(true);
-						player.sendMessage(ChatColor.RED + "You are not allowed to place blocks in " + zone.getName());
+						player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed to place blocks in " + zone.getName());
 						player.setFireTicks(100);
 							}
 						}
@@ -81,7 +81,7 @@ public class ZoneBuild implements Listener{
 					if(!zone.isFreePlace()){
 						if(!player.hasPermission("bytecraft.admin")){
 						event.setCancelled(true);
-						player.sendMessage(ChatColor.RED + "You are not allowed to place blocks in " + zone.getName());
+						player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed to place blocks in " + zone.getName());
 						player.setFireTicks(100);
 						}
 					}
