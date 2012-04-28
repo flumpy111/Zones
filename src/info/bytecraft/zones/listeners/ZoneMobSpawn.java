@@ -50,7 +50,11 @@ public class ZoneMobSpawn implements Listener{
 					if(type == EntityType.CAVE_SPIDER || type == EntityType.CREEPER || type == EntityType.ENDER_DRAGON || type == EntityType.ENDERMAN
 					|| type == EntityType.GHAST || type == EntityType.MAGMA_CUBE || type == EntityType.SILVERFISH || type == EntityType.SKELETON
 					|| type == EntityType.SPIDER || type == EntityType.ZOMBIE){
-						if(event.getEntity().getType() == EntityType.PLAYER){
+						if(type == EntityType.PLAYER){
+							if(!zone.isPvpAllowed()){
+								event.setCancelled(true);
+							}
+						}else{
 						event.setCancelled(true);
 						}
 					}
