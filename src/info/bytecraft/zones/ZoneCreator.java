@@ -1,6 +1,7 @@
 package info.bytecraft.zones;
 
 import info.bytecraft.zones.info.Zone;
+import info.bytecraft.zones.info.ZonePlayers;
 import info.bytecraft.zones.listeners.Selector;
 
 import org.bukkit.Bukkit;
@@ -18,5 +19,20 @@ public class ZoneCreator {
 		zone.setHostilesAllowed(true);
 		zone.setName(name);
 		plugin.getDatabase().save(zone);
+		ZonePlayers players = new ZonePlayers();
+		players.setZoneName(name);
+		players.setPlayer(player);
+		players.setRank(Rank.OWNER);
+		plugin.getDatabase().save(players);
+	}
+	
+	public static void deleteZone(String name){
+		if(plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique() == null)return;
+		Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique();
+		plugin.getDatabase().delete(zone);
+	}
+	
+	public static void addMember(Zone zone, Player player, Rank rank){
+		
 	}
 }

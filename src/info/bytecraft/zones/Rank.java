@@ -1,9 +1,5 @@
 package info.bytecraft.zones;
 
-import java.util.Map;
-
-import com.google.common.collect.Maps;
-
 public enum Rank {
 	
 	GUEST("guest"),
@@ -15,7 +11,6 @@ public enum Rank {
 	
 	
 	private String type;
-	private static Map<String, Rank> BY_TYPE = Maps.newHashMap();
 	
 	private Rank(String rank){
 		type = rank;
@@ -26,8 +21,10 @@ public enum Rank {
 	}
 	
 	public static Rank getByName(String name){
-		if(BY_TYPE.containsKey(name)){
-		return BY_TYPE.get(name);
+		for(Rank rank: Rank.values()){
+			if(rank.type.equalsIgnoreCase(name)){
+				return Rank.valueOf(name);
+			}
 		}
 		return null;
 	}

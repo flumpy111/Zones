@@ -24,7 +24,8 @@ public class ZonePlayers {
 	@NotNull
 	private String playerName;
 	
-	public Rank rank;
+	@NotNull
+	private Rank rank;
 	
 	public int getId(){
 		return this.id;
