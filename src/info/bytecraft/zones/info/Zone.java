@@ -12,6 +12,12 @@ import org.bukkit.World;
 import com.avaje.ebean.validation.Length;
 import com.avaje.ebean.validation.NotNull;
 
+/**
+ * Represents a zone. 
+ * A zone is an area that has been selected to be protected, or an area that allows players to fight each other.
+ * @author Sabersamus <rcatron10@gmail.com>
+ */
+
 @Entity()
 @Table(name="bytecraft_zones")
 public class Zone {
@@ -68,10 +74,18 @@ public class Zone {
 		this.id = id;
 	}
 	
+	/**
+	 * This gets the name of the <b>Zone</b>
+	 * @return - the name of the zone.
+	 */
 	public String getName(){
 		return this.name;
 	}
 	
+	/**
+	 * Sets the name of the <b>Zone</b>.
+	 * @param name - the new name of the zone, should only be used if creating a new zone.
+	 */
 	public void setName(String name){
 		this.name = name;
 	}
@@ -162,18 +176,23 @@ public class Zone {
 		this.setZ2(loc.getBlockZ());
 	}
 	
+	/**
+	 * This gets the enter message defined in the database
+	 * @return - if no enter-message has been specified, returns <b>"Welcome to " + zone.getName();</b> Otherwise it returns
+	 * the enter-message of the zone.
+	 */
 	public String getEnterMessage(){
 		if(this.enterMessage == null){
 			return ChatColor.RED + "Welcome to " + getName();
 		}
-		return this.enterMessage.replaceAll("(&([a-f0-9]))", ChatColor.COLOR_CHAR + "$2");
+		return ChatColor.RED + this.enterMessage;
 	}
 	
 	public String getExitMessage(){
 		if(this.exitMessage == null){
 			return ChatColor.RED + "You have left " + getName();
 		}
-		return this.exitMessage.replaceAll("(&([a-f0-9]))", ChatColor.COLOR_CHAR + "$2");
+		return ChatColor.RED + this.exitMessage;
 	}
 	
 	public void setEnterMessage(String message){
@@ -198,14 +217,6 @@ public class Zone {
 	
 	public void setHostilesAllowed(boolean hostiles){
 		this.hostilesAllowed = hostiles;
-	}
-	
-	public boolean contains(ZoneVector vector)
-	{
-	    ZoneVector min = new ZoneVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
-
-	    ZoneVector max = new ZoneVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
-		return vector.isIn(min, max);
 	}
 	
 	public boolean isWhiteListed(){
@@ -236,5 +247,19 @@ public class Zone {
 	public boolean equals(Object obj){
 		if(obj == null)return false;
 		return (Zone)obj == this;
+	}
+	
+	/**
+	 * This checks to see if the zone contains a {@link ZoneVector}
+	 * @param vector - the vector to check
+	 * @return - if the zone contains the point, returns true, else false.
+	 * @see {@link ZoneVector}
+	 */
+	public boolean contains(ZoneVector vector)
+	{
+	    ZoneVector min = new ZoneVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
+
+	    ZoneVector max = new ZoneVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
+		return vector.isIn(min, max);
 	}
 }

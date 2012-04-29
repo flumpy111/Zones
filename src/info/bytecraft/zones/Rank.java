@@ -1,5 +1,10 @@
 package info.bytecraft.zones;
 
+/**
+ * <b>Represents all the possible ranks of a zone.</b>
+ * @author Sabersamus <rcatron10@gmail.com>
+ * @see {@link Zone}
+ */
 public enum Rank {
 	
 	GUEST("guest"),

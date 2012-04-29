@@ -2,6 +2,8 @@ name: Zones
 version: 0.2
 author: Sabersamus
 main: info.bytecraft.zones.Zones
+description: >
+    The zones plugin for the server Bytecraft
 database: true
 commands:
     zone:
@@ -18,3 +20,16 @@ commands:
         description: manage the current zone you are in
         usage: |
             /<command>
+permissions:
+    bytecraft.zones.admin:
+        description: All permissions to zones
+        default: op
+        children:
+            bytecraft.zones.create: true
+            bytecraft.zones.delete: true
+            bytecraft.zones.whitelist: true
+            bytecraft.zones.adduser: true
+            bytecraft.zones.deluser: true
+            bytecraft.zones.select: true
+            bytecraft.zones.pvp: true
+            bytecraft.zones.messages: true

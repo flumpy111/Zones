@@ -50,4 +50,16 @@ public class ZoneCreator {
 		if(players == null)return;
 		plugin.getDatabase().delete(players);
 	}
+	
+	public static void setWhiteListed(String name, boolean value){
+		Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique();
+		zone.setWhiteListed(value);
+		plugin.getDatabase().save(zone);
+	}
+	
+	public static void setPvp(String name, boolean value){
+		Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique();
+		zone.setPvpAllowed(value);
+		plugin.getDatabase().save(zone);
+	}
 }

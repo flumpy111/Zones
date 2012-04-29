@@ -2,6 +2,11 @@ package info.bytecraft.zones.info;
 
 import org.bukkit.World;
 
+/**
+ * Represents a <b>ZoneVector.</b> A zone vector is a point, that can be used to check if a zone contains it.
+ * @author Sabersamus <rcatron10@gmail.com>
+ * @see {@link Zone}
+ */
 public class ZoneVector {
 	  private int x;
 	  private int y;
@@ -29,6 +34,12 @@ public class ZoneVector {
 		  this.world = world;
 	  }
 
+	  /**
+	   * Checks to see if a <b>ZoneVector</b> is in-between two other vectors.
+	   * @param min - the minimum <b>ZoneVector</b>
+	   * @param max - the maximum <b>ZoneVector</b>
+	   * @return - if the <b>ZoneVector</b> is in-between the others, returns true. Else false.
+	   */
 	  public boolean isIn(ZoneVector min, ZoneVector max)
 	  {
 		  if(max.world == null || max.world == null){
