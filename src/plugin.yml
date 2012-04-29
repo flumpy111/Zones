@@ -50,3 +50,4 @@ permissions:
             bytecraft.zones.pvp: true
             bytecraft.zones.messages: true
             bytecraft.zones.buildmanage: true
+            bytecraft.zones.lot: true

@@ -33,11 +33,11 @@ public class LotEnter implements Listener{
 				if(zone.contains(to)){
 				List<Lot> lots = plugin.getDatabase().find(Lot.class).where().ieq("zoneName", zone.getName()).findList();
 					for(Lot lot: lots){
-						if(lot.contains(to)/* && !lot.contains(from)*/){
-							player.sendMessage(ChatColor.AQUA + "Welcome to " + ChatColor.GOLD + lot.getLotName());
-						}/*else if(lot.contains(from) && !lot.contains(to)){
-							player.sendMessage(ChatColor.AQUA + "You have left " + ChatColor.GOLD + lot.getLotName());
-						}*/
+						if(lot.contains(to) && !lot.contains(from)){
+							player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+ChatColor.RED + "You have entered the lot: " + lot.getLotName());
+						}else if(lot.contains(from) && !lot.contains(to)){
+							player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+ "You have left " + lot.getLotName());
+						}
 					}
 				}
 			}

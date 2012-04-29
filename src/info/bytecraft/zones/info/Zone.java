@@ -13,8 +13,8 @@ import com.avaje.ebean.validation.Length;
 import com.avaje.ebean.validation.NotNull;
 
 /**
- * Represents a zone. 
- * A zone is an area that has been selected to be protected, or an area that allows players to fight each other.
+ * This represents a <b>Zone</b>
+ * A <b>Zone</b> is an area that has been selected to be protected, or an area that allows players to fight each other.
  * @author Sabersamus <rcatron10@gmail.com>
  */
 

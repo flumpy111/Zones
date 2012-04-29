@@ -44,7 +44,7 @@ public class ZoneEnter implements Listener{
 				}else{
 					if(zone.contains(to) && !zone.contains(from)){
 						if(!zone.isWhiteListed()){
-						player.sendMessage(zone.getEnterMessage());
+						player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+zone.getEnterMessage());
 						}else{
 							if(players.getRank() != Rank.ALLOWED || players.getRank() != Rank.MAKER || players.getRank() != Rank.OWNER){
 								if(!player.hasPermission("bytecraft.admin")){
@@ -58,7 +58,7 @@ public class ZoneEnter implements Listener{
 			}else{
 				if(!zone.isWhiteListed()){
 				if(zone.contains(to) && !zone.contains(from)){
-					player.sendMessage(zone.getEnterMessage());
+					player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+zone.getEnterMessage());
 						}
 					}else{
 						if(!player.hasPermission("bytecraft.admin")){
@@ -83,7 +83,7 @@ public class ZoneEnter implements Listener{
 		if(to != from){
 		for(Zone zone: plugin.getDatabase().find(Zone.class).where().ieq("worldName", world).findList()){
 				if(zone.contains(from) && !zone.contains(to)){
-					player.sendMessage(zone.getExitMessage());
+					player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+zone.getExitMessage());
 				}
 			}
 		}
@@ -112,7 +112,7 @@ public class ZoneEnter implements Listener{
 						}else{
 							if(zone.contains(to) && !zone.contains(from)){
 								if(!zone.isWhiteListed()){
-								player.sendMessage(zone.getEnterMessage());
+								player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+zone.getEnterMessage());
 								}else{
 									if(players.getRank() != Rank.ALLOWED || players.getRank() != Rank.MAKER || players.getRank() != Rank.OWNER){
 										if(!player.hasPermission("bytecraft.admin")){
@@ -126,7 +126,7 @@ public class ZoneEnter implements Listener{
 					}else{
 						if(!zone.isWhiteListed()){
 						if(zone.contains(to) && !zone.contains(from)){
-							player.sendMessage(zone.getEnterMessage());
+							player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+zone.getEnterMessage());
 								}
 							}else{
 								if(!player.hasPermission("bytecraft.admin")){
@@ -136,7 +136,7 @@ public class ZoneEnter implements Listener{
 							}
 						}
 				}else if(!zone.contains(to) && zone.contains(from)){
-					player.sendMessage(zone.getExitMessage());
+					player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+zone.getExitMessage());
 				}
 			}
 		}

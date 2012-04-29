@@ -10,6 +10,12 @@ import org.bukkit.World;
 
 import com.avaje.ebean.validation.NotNull;
 
+/**
+ * This represents a <b>Lot</b>, a lot is like a smaller {@link Zone} within a {@link Zone}, that allows
+ * certain players to build, even if the {@link Zone} is white-list-build.
+ * @author Sabersamus <rcatron10@gmail.com>
+ * @see {@link Zone}
+ */
 @Entity()
 @Table(name="zones_lots")
 public class Lot {

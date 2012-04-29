@@ -39,7 +39,7 @@ public class LotSelect implements Listener{
 				if(zone.contains(vector)){
 					List<ZonePlayers> players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).findList();
 					for(ZonePlayers other: players){
-						if(other != null && other.getRank() == Rank.OWNER){
+						if((other != null && other.getRank() == Rank.OWNER) || player.hasPermission("bytecraft.zones.lot")){
 					if(event.getAction() == Action.LEFT_CLICK_BLOCK){
 						if(!border1.containsKey(player)){
 							border1.put(player, loc);

@@ -19,6 +19,8 @@ public class ZoneCreator {
 		zone.setBorder2(Selector.border2.get(player));
 		zone.setPvpAllowed(false);
 		zone.setHostilesAllowed(true);
+		zone.setFreeBreak(true);
+		zone.setFreePlace(true);
 		zone.setName(name);
 		plugin.getDatabase().save(zone);
 		ZonePlayers players = new ZonePlayers();
@@ -29,13 +31,14 @@ public class ZoneCreator {
 	}
 	
 	public static void deleteZone(String name){
-		if(plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique() == null)return;
 		Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique();
 		List<ZonePlayers> players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).findList();
 		for(ZonePlayers other: players){
 			plugin.getDatabase().delete(other);
 		}
+		if(zone != null){
 		plugin.getDatabase().delete(zone);
+		}
 	}
 	
 	public static void addMember(String zone, Player player, Rank rank){

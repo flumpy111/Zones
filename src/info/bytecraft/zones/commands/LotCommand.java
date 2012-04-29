@@ -1,7 +1,6 @@
 package info.bytecraft.zones.commands;
 
 import info.bytecraft.zones.Rank;
-import info.bytecraft.zones.ZoneAlreadyExistsException;
 import info.bytecraft.zones.Zones;
 import info.bytecraft.zones.info.Lot;
 import info.bytecraft.zones.info.LotPlayers;
@@ -20,6 +19,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * This command is used to manage lots inside a zone.
+ * @author Sabersamus <rcatron10@gmail.com>
+ *
+ */
 public class LotCommand implements CommandExecutor{
 	private final Zones plugin;
 	public LotCommand(Zones instance){
@@ -32,42 +36,71 @@ public class LotCommand implements CommandExecutor{
 			Player player = (Player)cs;
 			Location loc = player.getLocation();
 			ZoneVector vector = new ZoneVector(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-			List<Zone> zones = plugin.getDatabase().find(Zone.class).where().ieq("worldName", player.getWorld().getName()).findList();
-			for(Zone zone: zones){
-				if(zone.contains(vector)){
-				List<ZonePlayers> players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).findList();
-				for(ZonePlayers other: players){
-					if(other != null && other.getRank() == Rank.OWNER){
-						if(args.length == 3){
+			List<Zone> zones = plugin.getDatabase().find(Zone.class).where().ieq("worldName", loc.getWorld().getName()).findList();
+			if(!zones.isEmpty()){
+				for(Zone zone: zones){
+					if(zone.contains(vector)){
+						ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
+						if((players != null && players.getRank() == Rank.OWNER) || player.hasPermission("bytecraft.zones.lot")){
+						if(args.length == 3){ //lot create[0] name[1] player[2] //lot adduser[0] name[1] player[2]
 							if(args[0].equalsIgnoreCase("create")){
-							String name = args[1];
-							Player target = Bukkit.getPlayer(args[2]);
-							if(target != null){
 								if(!LotSelect.border1.containsKey(player) || !LotSelect.border2.containsKey(player)){
-									player.sendMessage(ChatColor.RED + "Please select both borders of the lot first");
+									player.sendMessage(ChatColor.RED + "Please select both borders first!");
 									return true;
-								}else{
+								}
+								String name = args[1];
+								Player target = Bukkit.getPlayer(args[2]);
 								Lot lot = plugin.getDatabase().find(Lot.class).where().ieq("zoneName", zone.getName()).ieq("lotName", name).findUnique();
 								if(lot == null){
 									lot = new Lot();
-									lot.setZoneName(zone.getName());
-									lot.setLotName(name);
+									lot.setLotName(name); lot.setZoneName(zone.getName());
 									lot.setBorder1(LotSelect.border1.get(player));
-									lot.setBorder2(LotSelect.border2.get(player));
-									plugin.getDatabase().save(lot);
-									LotPlayers rawr = new LotPlayers();
-									rawr.setLotName(name);
-									rawr.setPlayer(target);
-									rawr.setZoneName(zone.getName());
-									plugin.getDatabase().save(rawr);
-									player.sendMessage(ChatColor.AQUA + "A new lot, " + name + ", has been created for " + target.getDisplayName());
-									return true;
-								}else{
-									try{
-										throw new ZoneAlreadyExistsException("The zone " + name + " already exists");
-									}catch(ZoneAlreadyExistsException ex){
-										player.sendMessage(ChatColor.RED + ex.getMessage());
+									lot.setBorder2(LotSelect.border2.get(player)); plugin.getDatabase().save(lot);
+									LotPlayers lots = new LotPlayers(); lots.setPlayer(target); lots.setLotName(name); lots.setZoneName(zone.getName());
+									plugin.getDatabase().save(lots);
+									player.sendMessage(ChatColor.RED+"<"+zone.getName()+">" + " Created the lot " + name + " for " + target.getDisplayName());
+								}
+							}else if(args[0].equalsIgnoreCase("adduser")){
+								Lot lot = plugin.getDatabase().find(Lot.class).where().ieq("name", args[1]).findUnique();
+								if(lot != null){
+									Player target = Bukkit.getPlayer(args[2]);
+									if(target != null){
+										LotPlayers other = plugin.getDatabase().find(LotPlayers.class).where().ieq("zoneName", zone.getName()).ieq("lotName", lot.getLotName()).findUnique();
+										if(other == null){
+											other = new LotPlayers();
+											other.setLotName(lot.getLotName());
+											other.setPlayer(target);
+											other.setZoneName(zone.getName());
+											player.sendMessage(ChatColor.RED+"<"+zone.getName()+">" + " Added " + target.getDisplayName() + ChatColor.RED + " to " + lot.getLotName());
+											return true;
+										}
 									}
+								}
+							}else if(args[0].equalsIgnoreCase("deluser")){
+								Lot lot = plugin.getDatabase().find(Lot.class).where().ieq("name", args[1]).findUnique();
+								if(lot != null){
+									Player target = Bukkit.getPlayer(args[2]);
+									if(target != null){
+										LotPlayers other = plugin.getDatabase().find(LotPlayers.class).where().ieq("zoneName", zone.getName()).ieq("lotName", lot.getLotName()).findUnique();
+										if(other != null){
+											plugin.getDatabase().delete(other);
+											player.sendMessage(ChatColor.RED+"<"+zone.getName()+">" + "Deleted " + target.getDisplayName() + ChatColor.RED + " from " + lot.getLotName());
+											return true;
+										}
+									}
+								}
+							}
+						}else if(args.length == 2){ //lot delete[0] name[1]
+							if(args[0].equalsIgnoreCase("delete")){
+								Lot lot = plugin.getDatabase().find(Lot.class).where().ieq("lotName", args[1]).ieq("zoneName", zone.getName()).findUnique();
+								if(lot != null){
+									List<LotPlayers> lots = plugin.getDatabase().find(LotPlayers.class).where().ieq("zoneName", zone.getName()).ieq("lotName", lot.getLotName()).findList();
+									plugin.getDatabase().delete(lot);
+									for(LotPlayers other: lots){
+										plugin.getDatabase().delete(other);
+									}
+									player.sendMessage(ChatColor.RED+"<"+zone.getName()+">" + " Deleted the lot " + args[1]);
+									return true;
 								}
 							}
 						}
@@ -76,9 +109,7 @@ public class LotCommand implements CommandExecutor{
 			}
 		}
 	}
-}
-		}
-		return false;
+		return true;
 	}
 
 }

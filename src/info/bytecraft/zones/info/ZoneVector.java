@@ -5,7 +5,7 @@ import org.bukkit.World;
 /**
  * Represents a <b>ZoneVector.</b> A zone vector is a point, that can be used to check if a zone contains it.
  * @author Sabersamus <rcatron10@gmail.com>
- * @see {@link Zone}
+ * @see Zone
  */
 public class ZoneVector {
 	  private int x;
