@@ -32,7 +32,22 @@ public class ZoneCreator {
 		plugin.getDatabase().delete(zone);
 	}
 	
-	public static void addMember(Zone zone, Player player, Rank rank){
-		
+	public static void addMember(String zone, Player player, Rank rank){
+		if(plugin.getDatabase().find(Zone.class).where().ieq("name", zone).findUnique() == null)return;
+		ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone).ieq("playerName", player.getName()).findUnique();
+		if(players == null){
+			players = new ZonePlayers();
+			players.setPlayer(player);
+			players.setZoneName(zone);
+		}
+		players.setRank(rank);
+		plugin.getDatabase().save(players);
+	}
+	
+	public static void deleteMember(String zone, Player player){
+		if(plugin.getDatabase().find(Zone.class).where().ieq("name", zone).findUnique() == null)return;
+		ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone).ieq("playerName", player.getName()).findUnique();
+		if(players == null)return;
+		plugin.getDatabase().delete(players);
 	}
 }
