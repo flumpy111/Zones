@@ -15,7 +15,7 @@ public enum Rank {
 	
 	
 	private String type;
-	private Map<String, Rank> BY_TYPE = Maps.newHashMap();
+	private static Map<String, Rank> BY_TYPE = Maps.newHashMap();
 	
 	private Rank(String rank){
 		type = rank;
@@ -25,7 +25,7 @@ public enum Rank {
 		return type;
 	}
 	
-	public Rank getByName(String name){
+	public static Rank getByName(String name){
 		if(BY_TYPE.containsKey(name)){
 		return BY_TYPE.get(name);
 		}

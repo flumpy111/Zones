@@ -6,6 +6,10 @@ database: true
 commands:
     zone:
         description: manage the zones
+        usage: |
+            /<command> create [name]
+            /<command> adduser [zone] [player] [rank]
+            /<command> deluser [zone] [player]
     lot:
         description: manage lots
         usage: |
