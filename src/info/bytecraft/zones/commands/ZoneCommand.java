@@ -43,7 +43,7 @@ public class ZoneCommand implements CommandExecutor{
 					}else if(args[0].equalsIgnoreCase("delete") && player.hasPermission("bytecraft.zones.delete")){
 						if(plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique() != null){
 							ZoneCreator.deleteZone(args[1]);
-							player.sendMessage(r+"<"+args[1]+">" + " deleted successfully");
+							player.sendMessage(r+"<"+args[1]+">" + " Zone deleted successfully");
 							return true;
 						}
 					}

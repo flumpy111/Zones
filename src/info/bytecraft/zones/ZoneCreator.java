@@ -1,5 +1,7 @@
 package info.bytecraft.zones;
 
+import java.util.List;
+
 import info.bytecraft.zones.info.Zone;
 import info.bytecraft.zones.info.ZonePlayers;
 import info.bytecraft.zones.listeners.Selector;
@@ -29,6 +31,10 @@ public class ZoneCreator {
 	public static void deleteZone(String name){
 		if(plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique() == null)return;
 		Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", name).findUnique();
+		List<ZonePlayers> players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).findList();
+		for(ZonePlayers other: players){
+			plugin.getDatabase().delete(other);
+		}
 		plugin.getDatabase().delete(zone);
 	}
 	
