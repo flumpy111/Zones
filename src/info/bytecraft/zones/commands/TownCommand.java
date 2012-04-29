@@ -90,6 +90,22 @@ public class TownCommand implements CommandExecutor{
 										//zone.setExitMessage(args[1]);
 										//plugin.getDatabase().update(zone);
 									}
+								}else if(args[0].equalsIgnoreCase("place")){
+									ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
+									if((players != null && players.getRank() == Rank.OWNER) || player.hasPermission("bytecraft.zones.buildmanage")){
+										boolean value = Boolean.parseBoolean(args[2]);
+										zone.setFreePlace(value);
+										plugin.getDatabase().save(zone);
+										player.sendMessage(r+"<"+zone.getName()+">"+" Toggled free place in " + zone.getName() + " to " + String.valueOf(value));
+									}
+								}else if(args[0].equalsIgnoreCase("break")){
+									ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
+									if((players != null && players.getRank() == Rank.OWNER) || player.hasPermission("bytecraft.zones.buildmanage")){
+										boolean value = Boolean.parseBoolean(args[2]);
+										zone.setFreeBreak(value);
+										plugin.getDatabase().save(zone);
+										player.sendMessage(r+"<"+zone.getName()+">"+" Toggled free break in " + zone.getName() + " to " + String.valueOf(value));
+									}
 								}
 							}else if(args.length == 3){
 								if(args[0].equalsIgnoreCase("adduser")){

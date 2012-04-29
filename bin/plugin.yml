@@ -12,6 +12,13 @@ commands:
             /<command> create [name]
             /<command> adduser [zone] [player] [rank]
             /<command> deluser [zone] [player]
+            /<command> delete [name]
+            /<command> pvp [zone] [true|false]
+            /<command> whitelist [zone] [true|false]
+            /<command> enter [zone] [message]
+            /<command> exit [zone] [message]
+            /<command> destroy [zone] [true|false]
+            /<command> place [zone] [true|false]
     lot:
         description: manage lots
         usage: |
@@ -19,7 +26,16 @@ commands:
     town:
         description: manage the current zone you are in
         usage: |
-            /<command>
+            /<command> delete
+            /<command> adduser [player] [rank]
+            /<command> deluser [player]
+            /<command> delete [name]
+            /<command> pvp [true|false]
+            /<command> whitelist [true|false]
+            /<command> enter [message]
+            /<command> exit [message]
+            /<command> destroy [true|false]
+            /<command> place [true|false]
 permissions:
     bytecraft.zones.admin:
         description: All permissions to zones
@@ -33,3 +49,4 @@ permissions:
             bytecraft.zones.select: true
             bytecraft.zones.pvp: true
             bytecraft.zones.messages: true
+            bytecraft.zones.buildmanage: true

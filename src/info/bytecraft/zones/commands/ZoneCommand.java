@@ -29,9 +29,7 @@ public class ZoneCommand implements CommandExecutor{
 			Player player = (Player)cs;
 				if(args.length == 2){ //zone create[0] name[1] //zone delete[0] name[1] //zone adduser[0] name[1] player[2] rank[3]
 					if(args[0].equalsIgnoreCase("create") && player.hasPermission("bytecraft.zones.create")){
-							plugin.getLogger().info("line 35");
 						if(plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique() == null){
-							plugin.getLogger().info("line 37");
 							if(!Selector.border1.containsKey(player) || !Selector.border2.containsKey(player)){
 								player.sendMessage(ChatColor.RED + "You must select both borders first!");
 								return true;
@@ -123,6 +121,28 @@ public class ZoneCommand implements CommandExecutor{
 						//zone.setExitMessage(args[2]);
 						//plugin.getDatabase().save(zone);
 						}
+					}
+				}else if(args[0].equalsIgnoreCase("destroy")){
+					Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique();
+					if(zone != null){
+						ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
+						if((players != null && players.getRank() == Rank.OWNER) || player.hasPermission("bytecraft.zones.buildmanage")){
+							boolean value = Boolean.parseBoolean(args[2]);
+							zone.setFreeBreak(value);
+							plugin.getDatabase().save(zone);
+							player.sendMessage(r+"<"+zone.getName()+">"+" Toggled free break in " + zone.getName() + " to " + String.valueOf(value));
+						} 
+					}
+				}else if(args[0].equalsIgnoreCase("place")){
+					Zone zone = plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique();
+					if(zone != null){
+						ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
+						if((players != null && players.getRank() == Rank.OWNER) || player.hasPermission("bytecraft.zones.buildmanage")){
+							boolean value = Boolean.parseBoolean(args[2]);
+							zone.setFreePlace(value);
+							plugin.getDatabase().save(zone);
+							player.sendMessage(r+"<"+zone.getName()+">"+" Toggled free place in " + zone.getName() + " to " + String.valueOf(value));
+						} 
 					}
 				}
 			}else if(args.length > 3){ //zone enter|exit[0] zone[1] message[2]
