@@ -1,7 +1,7 @@
 package info.bytecraft.zones;
 
-@SuppressWarnings("serial")
 public class ZoneNotFoundException extends Exception{
+	private static final long serialVersionUID = -8460800454978657204L;
 	private String input;
 	
 	public ZoneNotFoundException(String message){
@@ -17,7 +17,11 @@ public class ZoneNotFoundException extends Exception{
 		this.input = input;
 	}
 	
+	public ZoneNotFoundException() {
+		super();
+	}
+
 	public String getTriedZone(){
-		return this.input;
+		return (input == null ? "Unkown": input);
 	}
 }
