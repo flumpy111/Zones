@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,7 +28,7 @@ public class Zones extends JavaPlugin{
 	
 	private void registerEvents(){
 		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(new Selector(this), this);
+		pm.registerEvents(new ZoneSelector(this), this);
 		pm.registerEvents(new ZoneEnter(this), this);
 		pm.registerEvents(new ZoneBuild(this), this);
 		pm.registerEvents(new ZonePlayerFight(this), this);
@@ -35,6 +36,7 @@ public class Zones extends JavaPlugin{
 		pm.registerEvents(new LotEnter(this), this);
 		pm.registerEvents(new LotSelect(this), this);
 		pm.registerEvents(new LotBuild(this), this);
+		pm.registerEvents(new PistonCheck(), this);
 	}
 	
 	private void registerCommands(){
@@ -83,5 +85,10 @@ public class Zones extends JavaPlugin{
 		list.add(LotPlayers.class);
 		list.add(ZonePlayers.class);
 		return list;
+	}
+	
+	public static Zone getZone(String paramName){
+		Zone zone = Bukkit.getPluginManager().getPlugin("Zones").getDatabase().find(Zone.class).where().ieq("name", paramName).findUnique();
+		return (zone == null ? null: zone);
 	}
 }

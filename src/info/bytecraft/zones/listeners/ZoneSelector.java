@@ -17,9 +17,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Selector implements Listener {
+public class ZoneSelector implements Listener {
 	private final Zones plugin;
-	public Selector(Zones instance){
+	public ZoneSelector(Zones instance){
 		plugin = instance;
 	}
 

@@ -178,21 +178,15 @@ public class Zone {
 	
 	/**
 	 * This gets the enter message defined in the database
-	 * @return - if no enter-message has been specified, returns <b>"Welcome to " + zone.getName();</b> Otherwise it returns
+	 * @return - if no enter-message has been specified, returns <code>"Welcome to " + zone.getName();</code> Otherwise it returns
 	 * the enter-message of the zone.
 	 */
 	public String getEnterMessage(){
-		if(this.enterMessage == null){
-			return ChatColor.RED + "Welcome to " + getName();
-		}
-		return ChatColor.RED + this.enterMessage;
+		return(this.enterMessage == null ? ChatColor.RED + "Welcome to " + this.getName(): ChatColor.RED + this.enterMessage);
 	}
 	
 	public String getExitMessage(){
-		if(this.exitMessage == null){
-			return ChatColor.RED + "You have left " + getName();
-		}
-		return ChatColor.RED + this.exitMessage;
+		return(this.exitMessage == null ? ChatColor.RED + "You have left " + this.getName(): ChatColor.RED + this.exitMessage);
 	}
 	
 	public void setEnterMessage(String message){

@@ -43,5 +43,4 @@ public class LotEnter implements Listener{
 			}
 		}
 	}
-
 }

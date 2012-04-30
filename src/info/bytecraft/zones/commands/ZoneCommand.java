@@ -5,7 +5,7 @@ import info.bytecraft.zones.ZoneCreator;
 import info.bytecraft.zones.Zones;
 import info.bytecraft.zones.info.Zone;
 import info.bytecraft.zones.info.ZonePlayers;
-import info.bytecraft.zones.listeners.Selector;
+import info.bytecraft.zones.listeners.ZoneSelector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,7 +30,7 @@ public class ZoneCommand implements CommandExecutor{
 				if(args.length == 2){ //zone create[0] name[1] //zone delete[0] name[1] //zone adduser[0] name[1] player[2] rank[3]
 					if(args[0].equalsIgnoreCase("create") && player.hasPermission("bytecraft.zones.create")){
 						if(plugin.getDatabase().find(Zone.class).where().ieq("name", args[1]).findUnique() == null){
-							if(!Selector.border1.containsKey(player) || !Selector.border2.containsKey(player)){
+							if(!ZoneSelector.border1.containsKey(player) || !ZoneSelector.border2.containsKey(player)){
 								player.sendMessage(ChatColor.RED + "You must select both borders first!");
 								return true;
 							}
