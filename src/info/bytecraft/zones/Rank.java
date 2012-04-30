@@ -40,9 +40,7 @@ public enum Rank {
 	
 	public static Rank getByName(String name){
 		for(Rank rank: Rank.values()){
-			if(rank.type.equalsIgnoreCase(name)){
-				return Rank.valueOf(name);
-			}
+			return (rank.type.equalsIgnoreCase(name) ? Rank.valueOf(name): Rank.GUEST);
 		}
 		return null;
 	}
