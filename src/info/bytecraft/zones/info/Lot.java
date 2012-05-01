@@ -1,5 +1,8 @@
 package info.bytecraft.zones.info;
 
+import info.bytecraft.zones.ZoneNotFoundException;
+import info.bytecraft.zones.Zones;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -162,5 +165,10 @@ public class Lot {
 	    ZoneVector min = new ZoneVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
 	    ZoneVector max = new ZoneVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
 		return vector.isIn(min, max);
+	}
+	
+	public Zone getZone() throws ZoneNotFoundException{
+		Zone zone = Zones.getZone(this.zoneName);
+		return ((zone == null) ? null: zone);
 	}
 }

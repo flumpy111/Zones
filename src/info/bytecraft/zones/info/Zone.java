@@ -1,5 +1,8 @@
 package info.bytecraft.zones.info;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -255,5 +258,19 @@ public class Zone {
 
 	    ZoneVector max = new ZoneVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
 		return vector.isIn(min, max);
+	}
+	
+	@Override
+	public String toString(){
+		Random random = new Random(1000);
+		return "{Zone@"+random.nextLong()+"}";
+	}
+	
+	/**
+	 * Finds all the lots inside the zone
+	 * @return - a List of all the lots of the current zone
+	 */
+	public List<Lot> getLots(){
+		return Bukkit.getPluginManager().getPlugin("Zones").getDatabase().find(Lot.class).where().ieq("zoneName", getName()).findList();
 	}
 }

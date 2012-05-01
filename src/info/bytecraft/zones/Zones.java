@@ -1,6 +1,7 @@
 package info.bytecraft.zones;
 
 import info.bytecraft.zones.commands.*;
+import info.bytecraft.zones.events.ZoneEventListener;
 import info.bytecraft.zones.info.*;
 import info.bytecraft.zones.listeners.*;
 
@@ -24,6 +25,8 @@ public class Zones extends JavaPlugin{
 		setupLotsDatabase();
 		setupLotsPlayersDatabase();
 		setupPlayersDatabase();
+		
+		
 	}
 	
 	private void registerEvents(){
@@ -33,10 +36,11 @@ public class Zones extends JavaPlugin{
 		pm.registerEvents(new ZoneBuild(this), this);
 		pm.registerEvents(new ZonePlayerFight(this), this);
 		pm.registerEvents(new ZoneMobSpawn(this), this);
-		pm.registerEvents(new LotEnter(this), this);
+		pm.registerEvents(new LotEnter(), this);
 		pm.registerEvents(new LotSelect(this), this);
 		pm.registerEvents(new LotBuild(this), this);
 		pm.registerEvents(new PistonCheck(), this);
+		pm.registerEvents(new ZoneEventListener(this), this);
 	}
 	
 	private void registerCommands(){
@@ -90,5 +94,10 @@ public class Zones extends JavaPlugin{
 	public static Zone getZone(String paramName){
 		Zone zone = Bukkit.getPluginManager().getPlugin("Zones").getDatabase().find(Zone.class).where().ieq("name", paramName).findUnique();
 		return (zone == null ? null: zone);
+	}
+	
+	public static List<Zone> getZones(){
+		List<Zone> zones = Bukkit.getPluginManager().getPlugin("Zones").getDatabase().find(Zone.class).where().findList();
+		return ((zones.isEmpty()) ? null : zones);
 	}
 }

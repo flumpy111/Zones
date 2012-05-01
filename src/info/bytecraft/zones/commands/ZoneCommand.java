@@ -19,8 +19,6 @@ public class ZoneCommand implements CommandExecutor{
 	public ZoneCommand(Zones instance){
 		plugin = instance;
 	}
-	private ChatColor da = ChatColor.DARK_AQUA;
-	private ChatColor a = ChatColor.AQUA;
 	private ChatColor r = ChatColor.RED;
 	
 	@Override
@@ -35,7 +33,6 @@ public class ZoneCommand implements CommandExecutor{
 								return true;
 							}
 							ZoneCreator.createZone(args[1], player);
-							player.sendMessage(da +"Created a new zone "+a+ args[1]+da+" successfully");
 						}
 						return true;
 					}else if(args[0].equalsIgnoreCase("delete") && player.hasPermission("bytecraft.zones.delete")){

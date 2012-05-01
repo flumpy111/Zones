@@ -2,6 +2,7 @@ package info.bytecraft.zones;
 
 import java.util.List;
 
+import info.bytecraft.zones.events.ZoneCreateEvent;
 import info.bytecraft.zones.info.Zone;
 import info.bytecraft.zones.info.ZonePlayers;
 import info.bytecraft.zones.listeners.ZoneSelector;
@@ -22,12 +23,16 @@ public class ZoneCreator {
 		zone.setFreeBreak(true);
 		zone.setFreePlace(true);
 		zone.setName(name);
+		ZoneCreateEvent event = new ZoneCreateEvent(player, zone);
+		plugin.getServer().getPluginManager().callEvent(event);
+		if(!event.isCancelled()){
 		plugin.getDatabase().save(zone);
 		ZonePlayers players = new ZonePlayers();
 		players.setZoneName(name);
 		players.setPlayer(player);
 		players.setRank(Rank.OWNER);
 		plugin.getDatabase().save(players);
+		}
 	}
 	
 	public static void deleteZone(String name){

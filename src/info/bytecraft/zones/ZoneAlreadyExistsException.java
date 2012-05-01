@@ -4,7 +4,7 @@ import info.bytecraft.zones.info.Zone;
 
 @SuppressWarnings("serial")
 public class ZoneAlreadyExistsException extends Exception{
-	private static Zone zone;
+	private Zone zone;
 	
 	public ZoneAlreadyExistsException(String message){
 		super(message);
@@ -16,10 +16,10 @@ public class ZoneAlreadyExistsException extends Exception{
 	
 	public ZoneAlreadyExistsException(String message, Zone zone){
 		super(message);
-		ZoneAlreadyExistsException.zone = zone;
+		this.zone = zone;
 	}
 	
-	public static Zone getZone(){
+	public Zone getZone(){
 		return zone;
 	}
 	

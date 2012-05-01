@@ -1,12 +1,13 @@
 package info.bytecraft.zones;
 
+import info.bytecraft.zones.annotation.ZoneHandler;
+
 public enum ZoneType{
 	
 	@ZoneHandler(settings = ZoneSettings.DEFAULT)
 	DEFAULT(0),
 	@ZoneHandler(settings = ZoneSettings.WHITELIST)
 	RESTRICTED(1);
-	
 	
 	private static int id;
 	

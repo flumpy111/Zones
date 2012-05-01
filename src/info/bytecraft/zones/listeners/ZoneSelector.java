@@ -1,6 +1,7 @@
 package info.bytecraft.zones.listeners;
 
 import info.bytecraft.zones.Zones;
+import info.bytecraft.zones.events.ZoneCreateEvent;
 import info.bytecraft.zones.info.Zone;
 import info.bytecraft.zones.info.ZoneVector;
 
@@ -84,4 +85,17 @@ public class ZoneSelector implements Listener {
 				}
 			}
 		}
+	
+	@EventHandler
+	public void onCreate(ZoneCreateEvent event){
+		Player player = event.getPlayer();
+		if(player.getName().equalsIgnoreCase("player")){
+			event.setCancelled(true);
+		}
+		if(!event.isCancelled()){
+			player.sendMessage(ChatColor.DARK_AQUA +"Created a new zone "+ChatColor.AQUA + event.getZone().getName() +" successfully");
+		}else{
+			player.sendMessage(ChatColor.DARK_AQUA +"Created a new zone "+ChatColor.AQUA + event.getZone().toString() +" successfully");
+		}
 	}
+}
