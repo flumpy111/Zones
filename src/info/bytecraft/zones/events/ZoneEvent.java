@@ -22,6 +22,8 @@ public abstract class ZoneEvent extends Event {
 		return handlers;
 	}
 	
-	public abstract Zone getZone();
+	public Zone getZone(){
+		return zone;
+	}
 
 }

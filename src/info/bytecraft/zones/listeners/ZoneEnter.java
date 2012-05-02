@@ -2,6 +2,7 @@ package info.bytecraft.zones.listeners;
 
 import info.bytecraft.zones.Rank;
 import info.bytecraft.zones.Zones;
+import info.bytecraft.zones.events.ZoneEnterEvent;
 import info.bytecraft.zones.info.Zone;
 import info.bytecraft.zones.info.ZonePlayers;
 import info.bytecraft.zones.info.ZoneVector;
@@ -21,7 +22,7 @@ public class ZoneEnter implements Listener{
 	}
 	
 
-	@EventHandler
+	/*@EventHandler
 	public void onEnter(PlayerMoveEvent event){
 		Player player = event.getPlayer();
 		String world = event.getTo().getWorld().getName();
@@ -70,7 +71,7 @@ public class ZoneEnter implements Listener{
 				}
 			}
 		}
-	}
+	}*/
 	
 	@EventHandler
 	public void onExit(PlayerMoveEvent event){
@@ -140,6 +141,11 @@ public class ZoneEnter implements Listener{
 				}
 			}
 		}
+	}
+	
+	@EventHandler
+	public void onEnter(ZoneEnterEvent event){
+		event.getPlayer().sendMessage(event.getZone().getName() + " " + event.getEventName());
 	}
 	
 }

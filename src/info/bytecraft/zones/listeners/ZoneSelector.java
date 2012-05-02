@@ -89,13 +89,8 @@ public class ZoneSelector implements Listener {
 	@EventHandler
 	public void onCreate(ZoneCreateEvent event){
 		Player player = event.getPlayer();
-		if(player.getName().equalsIgnoreCase("player")){
-			event.setCancelled(true);
-		}
 		if(!event.isCancelled()){
-			player.sendMessage(ChatColor.DARK_AQUA +"Created a new zone "+ChatColor.AQUA + event.getZone().getName() +" successfully");
-		}else{
-			player.sendMessage(ChatColor.DARK_AQUA +"Created a new zone "+ChatColor.AQUA + event.getZone().toString() +" successfully");
+			player.sendMessage(ChatColor.DARK_AQUA +"Created a new zone "+ChatColor.AQUA + event.getZone().getName() + ChatColor.DARK_AQUA +" successfully");
 		}
 	}
 }
