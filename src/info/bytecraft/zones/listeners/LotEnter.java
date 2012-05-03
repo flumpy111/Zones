@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class LotEnter implements Listener{
+	public Zones plugin = Zones.plugin;
 	
 	@EventHandler
 	public void onEnter(PlayerMoveEvent event){
@@ -25,19 +26,36 @@ public class LotEnter implements Listener{
 		ZoneVector to = new ZoneVector((int)a.getX(), (int)a.getY(), (int)a.getZ());
 		ZoneVector from = new ZoneVector((int)b.getX(), (int)b.getY(), (int)b.getZ());
 		if(to != from){
-			for(Zone zone: Zones.getZones()){
+			if(plugin.getDatabase().find(Zone.class).where().findList().isEmpty())return;
+			for(Zone zone: plugin.getDatabase().find(Zone.class).where().findList()){
 				if(zone.contains(to)){
 					for(Lot lot: zone.getLots()){
 						if(lot.contains(to) && !lot.contains(from)){
-							player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+ChatColor.RED + "You have entered the lot: " + lot.getLotName());
-							Bukkit.getPluginManager().callEvent(new LotEnterEvent(player, zone, lot));
-						}else if(lot.contains(from) && !lot.contains(to)){
-							player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> "+ "You have left " + lot.getLotName());
 							Bukkit.getPluginManager().callEvent(new LotExitEvent(player, zone, lot));
+						}else if(lot.contains(from) && !lot.contains(to)){
+							Bukkit.getPluginManager().callEvent(new LotEnterEvent(player, zone, lot));
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	@EventHandler
+	public void onEnter(LotEnterEvent event){
+		ChatColor red = ChatColor.RED;
+		Zone zone = event.getZone();
+		Lot lot = event.getLot();
+		if(!event.isCancelled()){
+			event.getPlayer().sendMessage(red+"<"+zone.getName()+"> " + "You have entered the lot: " + lot.getLotName());
+		}
+	}
+	
+	@EventHandler
+	public void onExit(LotExitEvent event){
+		ChatColor red = ChatColor.RED;
+		Zone zone = event.getZone();
+		Lot lot = event.getLot();
+		event.getPlayer().sendMessage(red+"<"+zone.getName()+"> " + "You have left the lot: " + lot.getLotName());
 	}
 }

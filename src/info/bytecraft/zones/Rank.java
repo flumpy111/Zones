@@ -27,7 +27,6 @@ public enum Rank {
 	 */
 	ADMIN("admin");
 	
-	
 	private String type;
 	
 	private Rank(String rank){

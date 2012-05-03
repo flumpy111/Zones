@@ -1,19 +1,15 @@
 package info.bytecraft.zones.listeners;
 
-import java.util.List;
 
 import info.bytecraft.zones.Rank;
 import info.bytecraft.zones.Zones;
+import info.bytecraft.zones.events.ZoneBlockPlaceEvent;
 import info.bytecraft.zones.info.Zone;
 import info.bytecraft.zones.info.ZonePlayers;
-import info.bytecraft.zones.info.ZoneVector;
-
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 public class ZoneBuild implements Listener{
@@ -22,7 +18,7 @@ public class ZoneBuild implements Listener{
 		plugin = instance;
 	}
 	
-	@EventHandler
+	/*@EventHandler
 	public void onBreak(BlockBreakEvent event){
 		Player player = event.getPlayer();
 		Location loc = event.getBlock().getLocation();
@@ -54,9 +50,9 @@ public class ZoneBuild implements Listener{
 				}
 			}
 		}
-	}
+	}*/
 	
-	@EventHandler
+	/*@EventHandler
 	public void onPlace(BlockPlaceEvent event){
 		Player player = event.getPlayer();
 		Location loc = event.getBlock().getLocation();
@@ -88,5 +84,32 @@ public class ZoneBuild implements Listener{
 				}
 			}
 		}
+	}*/
+	
+	@EventHandler
+	public void onPlace(ZoneBlockPlaceEvent event){
+		Player player = event.getPlayer();
+		Zone zone = event.getZone();
+		plugin.getLogger().info(event.getEventName());
+		if(!zone.isFreePlace()){
+			ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
+			if(players != null){
+				if((players.getRank() != Rank.MAKER) || (players.getRank() != Rank.OWNER)){
+					event.setCancelled(true);
+					player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed to place blocks in " + zone.getName());
+					player.setFireTicks(60);
+				}
+			}else{
+				if(!player.hasPermission("byteraft.zones.admin")){
+					event.setCancelled(true);
+					player.sendMessage(ChatColor.RED+"<"+zone.getName()+"> " + "You are not allowed to place blocks in " + zone.getName());
+					player.setFireTicks(60);
+				}
+			}
+		}		
+		if(event.isCancelled()){
+			event.getBlock().breakNaturally();
+		}
+		plugin.getLogger().info(event.isCancelled()+ "");
 	}
 }

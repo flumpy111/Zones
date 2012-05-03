@@ -1,6 +1,7 @@
 package info.bytecraft.zones.events;
 
 import info.bytecraft.zones.Zones;
+import info.bytecraft.zones.info.Lot;
 import info.bytecraft.zones.info.Zone;
 import info.bytecraft.zones.info.ZoneVector;
 
@@ -29,6 +30,15 @@ public class ZoneEventListener implements Listener {
 		ZoneVector from = new ZoneVector(b.getBlockX(), b.getBlockY(), b.getBlockZ());
 		for(Zone zone: plugin.getDatabase().find(Zone.class).where().findList()){
 			if(zone.contains(to) && !zone.contains(from)){
+				for(Lot lot: zone.getLots()){
+					if(lot.contains(to) && !lot.contains(from)){
+						plugin.getServer().getPluginManager().callEvent(new LotEnterEvent(player, zone, lot));
+						return;
+					}else if(lot.contains(from) && !lot.contains(to)){
+						plugin.getServer().getPluginManager().callEvent(new LotExitEvent(player, zone, lot));
+						return;
+					}
+				}
 				if(!event.isCancelled()){
 				plugin.getServer().getPluginManager().callEvent(new ZoneEnterEvent(player,zone));
 				}

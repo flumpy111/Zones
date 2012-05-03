@@ -145,7 +145,18 @@ public class ZoneEnter implements Listener{
 	
 	@EventHandler
 	public void onEnter(ZoneEnterEvent event){
-		event.getPlayer().sendMessage(event.getZone().getName() + " " + event.getEventName());
+		if(!event.isCancelled()){
+			Zone zone = event.getZone();
+			if(zone.isWhiteListed()){
+				ZonePlayers player = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", event.getPlayer().getName()).findUnique();
+				if((player == null) || !event.getPlayer().hasPermission("bytecraft.zones.override")){
+					event.setCancelled(true);
+					event.getPlayer().sendMessage(ChatColor.RED+"<"+zone.getName()+"> You are not allowed inside " + zone.getName());
+					return;
+				}
+			}
+			event.getPlayer().sendMessage(ChatColor.RED + "<"+zone.getName()+"> " + zone.getEnterMessage());
+		}
 	}
 	
 }

@@ -24,6 +24,10 @@ public class LotExitEvent extends Event {
 		return handlers;
 	}
 	
+	public static HandlerList getHandlerList(){
+		return handlers;
+	}
+	
 	public Zone getZone(){
 		return this.zone;
 	}

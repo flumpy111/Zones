@@ -42,8 +42,10 @@ public class LotCommand implements CommandExecutor{
 					if(zone.contains(vector)){
 						ZonePlayers players = plugin.getDatabase().find(ZonePlayers.class).where().ieq("zoneName", zone.getName()).ieq("playerName", player.getName()).findUnique();
 						if((players != null && players.getRank() == Rank.OWNER) || player.hasPermission("bytecraft.zones.lot")){
+							plugin.getLogger().info("debug 1234");
 						if(args.length == 3){ //lot create[0] name[1] player[2] //lot adduser[0] name[1] player[2]
 							if(args[0].equalsIgnoreCase("create")){
+								plugin.getLogger().info("debug 12345");
 								if(!LotSelect.border1.containsKey(player) || !LotSelect.border2.containsKey(player)){
 									player.sendMessage(ChatColor.RED + "Please select both borders first!");
 									return true;
@@ -52,6 +54,7 @@ public class LotCommand implements CommandExecutor{
 								Player target = Bukkit.getPlayer(args[2]);
 								Lot lot = plugin.getDatabase().find(Lot.class).where().ieq("zoneName", zone.getName()).ieq("lotName", name).findUnique();
 								if(lot == null){
+									plugin.getLogger().info("debug 123456");
 									lot = new Lot();
 									lot.setLotName(name); lot.setZoneName(zone.getName());
 									lot.setBorder1(LotSelect.border1.get(player));

@@ -15,18 +15,18 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Zones extends JavaPlugin{
+	public static Zones plugin;
 	
 	
 	@Override
 	public void onEnable(){
+		plugin = this;
 		registerEvents();
 		registerCommands();
 		setupZoneDatabase();
 		setupLotsDatabase();
 		setupLotsPlayersDatabase();
 		setupPlayersDatabase();
-		
-		
 	}
 	
 	private void registerEvents(){
